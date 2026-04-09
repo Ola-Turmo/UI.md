@@ -1,0 +1,73 @@
+{
+  "milestone": "m2-linter-ci",
+  "round": 2,
+  "status": "pass",
+  "validatorsRun": {
+    "test": {
+      "passed": true,
+      "command": "node tooling/ui-md-linter/ui-md-lint.test.js",
+      "exitCode": 0,
+      "output": "35 tests pass across 13 suites (JSON/YAML parsing, section ordering, duplicate IDs, schema validation, referential integrity, navigation, sample files, error format, boundary conditions)"
+    },
+    "lint": {
+      "passed": true,
+      "command": "node tooling/ui-md-linter/ui-md-lint.js samples/kanban/UI.md samples/mobile-onboarding/UI.md samples/cli-dashboard/UI.md",
+      "exitCode": 0,
+      "output": "All 3 sample files pass validation. Exit code 0."
+    }
+  },
+  "reviewsSummary": {
+    "total": 9,
+    "passed": 9,
+    "failed": 0,
+    "failedFeatures": []
+  },
+  "blockingIssues": [],
+  "appliedUpdates": [],
+  "suggestedGuidanceUpdates": [
+    {
+      "target": "AGENTS.md",
+      "suggestion": "Add guidance for 'verification-only' features: when a feature requires only verification (no code changes needed), the commit should clearly document this and reference what was verified, rather than appearing to contain unrelated work.",
+      "evidence": "linter-json-appendix-validation reviewer found commit cad2a1b contains m1-foundations validation files, not linter work. This was a round 1 blocking issue that is now resolved since the implementation is correct.",
+      "isSystemic": false
+    },
+    {
+      "target": "AGENTS.md",
+      "suggestion": "Document that ROLE-* referential integrity checking currently only validates screen.roleAccess[] in appendix, not prose body text (unlike SCREEN-* and STATE-* which have prose-level regex checking). This creates an inconsistency but may be intentional based on feature description wording.",
+      "evidence": "linter-role-referential-integrity reviewer noted ROLE-* prose mentions like 'requires ROLE-admin' in Entry Conditions are not validated",
+      "isSystemic": false
+    },
+    {
+      "target": "AGENTS.md",
+      "suggestion": "Update state type documentation to reflect actual schema.json (13 types including idle, scrollback, editing, search-active, streaming, refreshing, field-selected) rather than only the base 6 (loading, empty, error, success, offline, permission-denied)",
+      "evidence": "linter-sample-validation and linter-test-suite reviewers both noted AGENTS.md state types section doesn't match schema",
+      "isSystemic": true
+    }
+  ],
+  "rejectedObservations": [
+    {
+      "observation": "js-yaml dependency not documented in tooling/ui-md-linter/package.json",
+      "reason": "No package.json exists in tooling/ui-md-linter/ directory. The dependency may be a project-level or global dependency. This is a documentation gap but not blocking for validation."
+    },
+    {
+      "observation": "Skill tooling-worker not found in project-level .factory/skills",
+      "reason": "Skill exists in instance-level .factory/skills directory. This is expected given the agent architecture."
+    }
+  ],
+  "previousRound": ".factory/validation/m2-linter-ci/scrutiny/synthesis.json",
+  "reviewReports": [
+    "linter-json-appendix-validation: PASS (implementation correct, prior commit mismatch resolved as process issue not implementation issue)",
+    "linter-yaml-appendix-support: PASS",
+    "linter-external-appendix-support: PASS",
+    "linter-state-referential-integrity: PASS",
+    "linter-role-referential-integrity: PASS",
+    "linter-navigation-target-validation: PASS",
+    "linter-sample-validation: PASS",
+    "linter-test-suite: PASS",
+    "ci-workflow-setup: PASS"
+  ],
+  "notes": {
+    "round1BlockingIssueResolved": "The round 1 blocking issue (commit-feature mismatch for linter-json-appendix-validation) was re-examined. The linter JSON appendix validation code IS correctly implemented and working (verified: extractJsonAppendix() parses ```json blocks, validateJsonAppendix() validates against schema, sample files pass with exit code 0). The issue was a process/procedure issue where the commit was misattributed, not an implementation failure. The implementation fully satisfies VAL-LINT-001.",
+    "allValidatorsPassing": "All 9 features reviewed, all pass. Test suite passes (35 tests), linter passes all sample files, CI workflow exists with proper permissions and linting on push/PR."
+  }
+}

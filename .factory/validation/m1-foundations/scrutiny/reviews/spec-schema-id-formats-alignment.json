@@ -1,0 +1,28 @@
+{
+  "featureId": "spec-schema-id-formats-alignment",
+  "reviewedAt": "2026-04-02T21:00:00.000Z",
+  "commitId": "b6cc1ac",
+  "transcriptSkeletonReviewed": true,
+  "diffReviewed": true,
+  "status": "pass",
+  "codeReview": {
+    "summary": "The original blocking issue (SPEC.md embedded schema patterns for STATE and ROLE IDs not updated to match schema.json) has been fixed. Commit b6cc1ac updated: STATE pattern from ^STATE-[A-Z][a-zA-Z0-9]*$ to ^STATE-[A-Za-z][a-zA-Z0-9-]*$, ROLE pattern from ^ROLE-[A-Z][a-zA-Z0-9]*$ to ^ROLE-[A-Za-z][a-zA-Z0-9]*$, and backStack enum to include Pop.",
+    "issues": []
+  },
+  "sharedStateObservations": [
+    {
+      "area": "conventions",
+      "observation": "The fix for the original blocking issue was applied in a separate commit (b6cc1ac) after the feature's own commit (76f72b2). The original feature commit only addressed SCREEN ID format (PascalCase → lowerCamelCase). The STATE/ROLE pattern fix came later via the scrutiny fix-up process.",
+      "evidence": "Commit 76f72b2 changed SCREEN format only. Commit b6cc1ac fixed STATE/ROLE patterns. Original issue from progress_log.jsonl line 46: 'SPEC.md embedded JSON schema patterns for STATE (line 614) and ROLE (line 648) IDs were not updated'"
+    }
+  ],
+  "addressesFailureFrom": null,
+  "fixVerification": {
+    "specStatePatternLine614": "^STATE-[A-Za-z][a-zA-Z0-9-]*$",
+    "specRolePatternLine648": "^ROLE-[A-Za-z][a-zA-Z0-9]*$",
+    "schemaStatePattern": "^STATE-[A-Za-z][a-zA-Z0-9-]*$",
+    "schemaRolePattern": "^ROLE-[A-Za-z][a-zA-Z0-9]*$",
+    "allPatternsAligned": true
+  },
+  "summary": "The original blocking issue has been resolved. SPEC.md embedded schema STATE pattern (line 614) and ROLE pattern (line 648) now match schema.json patterns. All patterns allow [A-Za-z] after the hyphen and hyphens within the identifier body. The fix was applied in commit b6cc1ac. Status: PASS."
+}

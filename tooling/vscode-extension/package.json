@@ -1,0 +1,68 @@
+{
+  "name": "ui-md-standard",
+  "version": "0.0.1",
+  "description": "VS Code extension for UI.md Standard — provides syntax highlighting, validation diagnostics, and preview support for UI.md files",
+  "publisher": "ui-md-standard",
+  "main": "./extension.js",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "activationEvents": [
+    "onLanguage:ui-md",
+    "workspaceContains:**/*.ui.md"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "uiMd.validate",
+        "title": "Validate UI.md File"
+      },
+      {
+        "command": "uiMd.showPreview",
+        "title": "Show UI.md Preview"
+      },
+      {
+        "command": "uiMd.insertScreenTemplate",
+        "title": "Insert Screen Template"
+      },
+      {
+        "command": "uiMd.insertStateTemplate",
+        "title": "Insert State Template"
+      }
+    ],
+    "languages": [
+      {
+        "id": "ui-md",
+        "aliases": ["UI.md", "UI Markdown"],
+        "extensions": [".ui.md"],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "ui-md",
+        "scopeName": "text.ui-md",
+        "path": "./syntaxes/ui-md.tmLanguage.json"
+      }
+    ],
+    "configuration": {
+      "title": "UI.md Standard",
+      "properties": {
+        "uiMd.enableDiagnostics": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable validation diagnostics for UI.md files"
+        },
+        "uiMd.enablePreview": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable UI.md preview panel"
+        }
+      }
+    }
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/vscode": "^1.96.0"
+  }
+}
